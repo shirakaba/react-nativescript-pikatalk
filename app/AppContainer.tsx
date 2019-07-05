@@ -34,11 +34,21 @@ export class AppContainer extends React.Component<{ forwardedRef: React.RefObjec
 
 		return (
 			<$TabView ref={forwardedRef} selectedIndex={0}>
-				<CustomTabViewItem title="One" identifier="Item 1" colour={new Color("yellow")}>
-					<$Label>Uno</$Label>
+				<CustomTabViewItem title="PikaTalk" identifier="Item 1" colour={new Color("yellow")}>
+					<$Label>TODO: PikaTalk</$Label>
 				</CustomTabViewItem>
-				<CustomTabViewItem title="Two" identifier="Item 2" colour={new Color("orange")}>
-					<$Label>Dos</$Label>
+				<CustomTabViewItem title="Moments" identifier="Item 2" colour={new Color("orange")}>
+					<$Label>TODO: Moments</$Label>
+				</CustomTabViewItem>
+				<CustomTabViewItem title="Search" identifier="Item 3" colour={new Color("red")}>
+					<$Label>TODO: Search</$Label>
+				</CustomTabViewItem>
+				{/* Less interested in reproducing this one, but we'll see. */}
+				<CustomTabViewItem title="Learn" identifier="Item 4" colour={new Color("violet")}>
+					<$Label>TODO: Learn</$Label>
+				</CustomTabViewItem>
+				<CustomTabViewItem title="Profile" identifier="Item 5" colour={new Color("indigo")}>
+					<$Label>TODO: Profile</$Label>
 				</CustomTabViewItem>
 			</$TabView>
 		);
