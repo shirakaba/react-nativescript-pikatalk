@@ -5,7 +5,7 @@ purpose of the file is to pass control to the app’s first module.
 */
 
 /* Controls react-nativescript log verbosity. true: all logs; false: only error logs. */
-(global as any).__DEV__ = false;
+(global as any).__DEV__ = true;
 
 import * as React from "react";
 import * as ReactNativeScript from "react-nativescript";
@@ -20,6 +20,7 @@ ReactNativeScript.render(
 	React.createElement(AppContainer, { forwardedRef: rootRef }, null),
 	null,
 	() => {
+		console.log(`AppContainer top-level render complete! run.create with rootRef.current: ${rootRef.current}`);
 		run({
 		    create: () => {
 		        return rootRef.current;
