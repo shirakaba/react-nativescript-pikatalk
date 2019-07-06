@@ -5,6 +5,7 @@ import { $TabView, $TabViewItem, $StackLayout, $Label, $ActionBar, $Frame, $Page
 import { Color } from "tns-core-modules/color";
 import { isIOS } from "tns-core-modules/platform/platform";
 import { EventData } from "tns-core-modules/ui/page/page";
+import { TabViewItemWithPage } from "~/components/TabViewItemWithPage";
 
 export class ChatTab extends React.Component<{}, {}>
 {
@@ -42,21 +43,21 @@ export class ChatTab extends React.Component<{}, {}>
 		console.log(`[render] ChatTab render!`);
 
 		return (
-            <$TabViewItem title={"Chat"}>
-                <$Frame ref={this.frameRef}>
-                    <$Page ref={this.pageRef}>
-                        <$ActionBar
-                            title={"Conversations"}
-                            onLoaded={(args: EventData) => {
-                                this.setActionBarNativeStyle(args.object as ActionBar);
-                            }}
-                        />
-                        <$StackLayout height={{ value: 100, unit: "%"}} width={{ value: 100, unit: "%"}} backgroundColor={new Color("white")}>
-                            <$Label>TODO: Put something in here</$Label>
-                        </$StackLayout>
-                    </$Page>
-                </$Frame>
-            </$TabViewItem>
+            <TabViewItemWithPage title={"Chat"}>
+                <$ActionBar
+                    title={"Conversations"}
+                    onLoaded={(args: EventData) => {
+                        this.setActionBarNativeStyle(args.object as ActionBar);
+                    }}
+                />
+                <$StackLayout
+                    height={{ value: 100, unit: "%"}}
+                    width={{ value: 100, unit: "%"}}
+                    backgroundColor={new Color("white")}
+                >
+                    <$Label>TODO: Put something in here</$Label>
+                </$StackLayout>
+            </TabViewItemWithPage>
 		);
 	}
 }
