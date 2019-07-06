@@ -16,19 +16,34 @@ import { AppContainer } from "./AppContainer";
 
 const rootRef: React.RefObject<any> = React.createRef<any>();
 
-ReactNativeScript.render(
-	React.createElement(AppContainer, { forwardedRef: rootRef }, null),
-	null,
-	() => {
-		console.log(`AppContainer top-level render complete! run.create with rootRef.current: ${rootRef.current}`);
-		run({
-		    create: () => {
-		        return rootRef.current;
-		    },
-		});
+// ReactNativeScript.render(
+// 	React.createElement(AppContainer, { forwardedRef: rootRef }, null),
+// 	null,
+// 	() => {
+// 		console.log(`AppContainer top-level render complete! run.create with rootRef.current: ${rootRef.current}`);
+// 		run({
+// 		    create: () => {
+// 		        return rootRef.current;
+// 		    },
+// 		});
+// 	},
+// 	"__APP_ROOT__",
+// );
+
+run({
+	create: () => {
+		ReactNativeScript.render(
+			React.createElement(AppContainer, { forwardedRef: rootRef }, null),
+			null,
+			() => {
+				console.log(`AppContainer top-level render complete! run.create with rootRef.current: ${rootRef.current}`);
+			},
+			"__APP_ROOT__",
+		);
+		return rootRef.current;
 	},
-	"__APP_ROOT__",
-);
+});
+
 
 /*
 Do not place any code after the application has been started as it will not
