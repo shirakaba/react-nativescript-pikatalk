@@ -5,6 +5,7 @@ import { $TabView, $TabViewItem, $StackLayout, $Label, $ActionBar, $Frame, $Page
 import { Color } from "tns-core-modules/color";
 import { ChatTab } from "./tabs/Chat";
 
+/* Just a placeholder until I've made bona fide TabViewItems for these. */
 class CustomTabViewItem extends React.Component<
 	{
 		title: string,
@@ -28,51 +29,28 @@ class CustomTabViewItem extends React.Component<
     }
 }
 
-export class AppContainer extends React.Component<{ forwardedRef: React.RefObject<Frame> }, {}> {
-	private readonly pageRef: React.RefObject<Page> = React.createRef<Page>();
-
-	componentDidMount(){		
-		const frame: Frame = this.props.forwardedRef.current!;
-		const page: Page = this.pageRef.current!;
-		console.log(`[componentDidMount] AppContainer mounted! frame: ${frame}; page: ${page}`);
-		
-		if(!frame || !page){
-			console.error(`[componentDidMount] AppContainer missing ref - frame: ${frame}; page: ${page}.`);
-			return;
-		}
-
-		frame.navigate({
-			create: () => {
-				return page;
-			}
-		});
-	}
-
+export class AppContainer extends React.Component<{ forwardedRef: React.RefObject<any> }, {}> {
 	render(){
 		const { forwardedRef } = this.props;
 		console.log(`[render()] AppContainer rootRef.current: ${forwardedRef.current}`);
 
+		/* Structure recommended by: https://docs.nativescript.org/core-concepts/navigation#tabview-navigation */
 		return (
-			<$Frame ref={forwardedRef}>
-				<$Page ref={this.pageRef}>
-					{/* <$ActionBar title={"ACTION BAR MAIN TITLE"}/> */}
-					<$TabView selectedIndex={0}>
-						<ChatTab title="PikaTalk" colour={new Color("yellow")}/>
-						<CustomTabViewItem title="Moments" colour={new Color("orange")}>
-							<$Label>TODO: Moments</$Label>
-						</CustomTabViewItem>
-						<CustomTabViewItem title="Search" colour={new Color("red")}>
-							<$Label>TODO: Search</$Label>
-						</CustomTabViewItem>
-						<CustomTabViewItem title="Learn" colour={new Color("violet")}>
-							<$Label>TODO: Learn</$Label>
-						</CustomTabViewItem>
-						<CustomTabViewItem title="Profile" colour={new Color("indigo")}>
-							<$Label>TODO: Profile</$Label>
-						</CustomTabViewItem>
-					</$TabView>
-				</$Page>
-			</$Frame>
+			<$TabView ref={forwardedRef} selectedIndex={0}>
+				<ChatTab/>
+				<CustomTabViewItem title="Moments" colour={new Color("orange")}>
+					<$Label>TODO: Moments</$Label>
+				</CustomTabViewItem>
+				<CustomTabViewItem title="Search" colour={new Color("red")}>
+					<$Label>TODO: Search</$Label>
+				</CustomTabViewItem>
+				<CustomTabViewItem title="Learn" colour={new Color("violet")}>
+					<$Label>TODO: Learn</$Label>
+				</CustomTabViewItem>
+				<CustomTabViewItem title="Profile" colour={new Color("indigo")}>
+					<$Label>TODO: Profile</$Label>
+				</CustomTabViewItem>
+			</$TabView>
 		);
 	}
 }
