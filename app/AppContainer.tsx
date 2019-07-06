@@ -13,7 +13,7 @@ class CustomTabViewItem extends React.Component<
 	},
 	{}
 >
-{
+{	
 	private readonly selfRef: React.RefObject<any> = React.createRef<any>();
 
     render(){
@@ -29,15 +29,28 @@ class CustomTabViewItem extends React.Component<
     }
 }
 
-export class AppContainer extends React.Component<{ forwardedRef: React.RefObject<any> }, {}> {
+export class AppContainer extends React.Component<{ forwardedRef: React.RefObject<any> }, { selectedIndex: number, }> {
+	constructor(props){
+		super(props);
+
+		this.state = {
+			selectedIndex: 0,
+		};
+	}
+
 	render(){
-		const { forwardedRef } = this.props;
+		const { forwardedRef, } = this.props;
+		const { selectedIndex, } = this.state;
 		console.log(`[render()] AppContainer rootRef.current: ${forwardedRef.current}`);
 
 		/* Structure recommended by: https://docs.nativescript.org/core-concepts/navigation#tabview-navigation */
 		return (
-			<$TabView ref={forwardedRef} selectedIndex={0}>
-				<ChatTab/>
+			<$TabView
+				ref={forwardedRef}
+				selectedIndex={selectedIndex}
+				onSelectedIndexChanged={(args) => { this.setState({ selectedIndex: args.newIndex }); }}
+			>
+				<ChatTab focused={selectedIndex === 0}/>
 				<CustomTabViewItem title="Moments" colour={new Color("orange")}>
 					<$Label>TODO: Moments</$Label>
 				</CustomTabViewItem>
