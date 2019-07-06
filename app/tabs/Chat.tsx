@@ -8,6 +8,8 @@ import { isIOS } from "tns-core-modules/platform/platform";
 import { EventData } from "tns-core-modules/ui/page/page";
 import { TabViewItemWithPage } from "~/components/TabViewItemWithPage";
 import { ObservableArray } from "tns-core-modules/data/observable-array/observable-array";
+import { FontWeight } from "tns-core-modules/ui/enums/enums";
+import { Length } from "tns-core-modules/ui/styling/style-properties";
 
 interface Props {
     focused: boolean,
@@ -68,16 +70,18 @@ export class ChatTab extends React.Component<Props, State>
         uiNavBar.prefersLargeTitles = true;
     };
 
+    private readonly avatarLength: number = Length.toDevicePixels(20);
+
     private readonly styles = {
         avatar: {
-            width: { value: 64, unit: "dip" as "dip" },
-            height: { value: 64, unit: "dip" as "dip" },
+            width: { value: this.avatarLength, unit: "dip" as "dip" },
+            height: { value: this.avatarLength, unit: "dip" as "dip" },
         },
     };
 
 	render(){
 		const { focused, } = this.props;
-		console.log(`[render] ChatTab render!`);
+		console.log(`[render] ChatTab render with this.avatarLength ${this.avatarLength}!`);
 
 		return (
             <TabViewItemWithPage title={"Chat"}>
@@ -100,31 +104,39 @@ export class ChatTab extends React.Component<Props, State>
                         cellFactory={(item: ConversationItem, ref: React.RefObject<any>) => {
                             const { type, avatar, name, message, timestamp, online } = item;
                             
-                            
                             return (
                                 <$GridLayout ref={ref}
                                     rows={[new ItemSpec(1, "star")]}
-                                    columns={[new ItemSpec(64, "pixel"), new ItemSpec(1, "star"), new ItemSpec(1, "auto")]}
+                                    columns={[new ItemSpec(this.avatarLength, "pixel"), new ItemSpec(1, "star"), new ItemSpec(1, "auto")]}
                                 >
                                     <$Image
                                         row={0}
                                         col={0}
                                         src={item.avatar}
                                         style={this.styles.avatar}
+                                        backgroundColor={new Color("green")}
                                         stretch={"aspectFill"}
                                     />
-                                    <$Label
+                                    <$GridLayout
                                         row={0}
                                         col={1}
+                                        rows={[new ItemSpec(1, "star"), new ItemSpec(1, "star")]}
+                                        columns={[new ItemSpec(1, "star")]}
                                     >
-                                        {item.name}
-                                    </$Label>
-                                    <$Label
+                                        <$Label row={0} col={0} style={{ fontWeight: FontWeight.bold }}>{item.name}</$Label>
+                                        <$Label row={1} col={0} color={new Color('gray')}>{item.message}</$Label>
+                                    </$GridLayout>
+                                    <$GridLayout
                                         row={0}
                                         col={2}
+                                        rows={[new ItemSpec(1, "star"), new ItemSpec(1, "star")]}
+                                        columns={[new ItemSpec(1, "star")]}
                                     >
-                                        {`${[timestamp.getDate(), timestamp.getMonth(), timestamp.getFullYear().toString().slice(2)].join('/')}`}
-                                    </$Label>
+                                        <$Label row={0} col={0} textAlignment={"right"} color={new Color('lightgray')}>
+                                            {`${[timestamp.getDate(), timestamp.getMonth(), timestamp.getFullYear().toString().slice(2)].join('/')}`}
+                                        </$Label>
+                                        <$Label row={1} col={0} textAlignment={"center"}>{online ? "💡" : ""}</$Label>
+                                    </$GridLayout>
                                 </$GridLayout>
                             );
                         }}
