@@ -57,9 +57,9 @@ export class AppContainer extends React.Component<{ forwardedRef: React.RefObjec
 				<CustomTabViewItem title="Search" colour={new Color("red")}>
 					<$Label>TODO: Search</$Label>
 				</CustomTabViewItem>
-				<CustomTabViewItem title="Learn" colour={new Color("violet")}>
+				{/* <CustomTabViewItem title="Learn" colour={new Color("violet")}>
 					<$Label>TODO: Learn</$Label>
-				</CustomTabViewItem>
+				</CustomTabViewItem> */}
 				<CustomTabViewItem title="Profile" colour={new Color("indigo")}>
 					<$Label>TODO: Profile</$Label>
 				</CustomTabViewItem>

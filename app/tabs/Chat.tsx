@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as ReactNativeScript from "react-nativescript";
 import { Frame, Page, ActionBar } from "react-nativescript/dist/client/ElementRegistry";
-import { $TabView, $TabViewItem, $StackLayout, $Label, $ActionBar, $Frame, $Page, $ListView, $GridLayout, $Image } from "react-nativescript";
+import { $TabView, $TabViewItem, $StackLayout, $Label, $ActionBar, $Frame, $Page, $ListView, $GridLayout, $Image, $ContentView } from "react-nativescript";
 import { ItemSpec } from "tns-core-modules/ui/layouts/grid-layout/grid-layout";
 import { Color } from "tns-core-modules/color";
 import { isIOS } from "tns-core-modules/platform/platform";
@@ -10,6 +10,8 @@ import { TabViewItemWithPage } from "~/components/TabViewItemWithPage";
 import { ObservableArray } from "tns-core-modules/data/observable-array/observable-array";
 import { FontWeight } from "tns-core-modules/ui/enums/enums";
 import { Length } from "tns-core-modules/ui/styling/style-properties";
+import { $SVGImage } from "../nativescript-svg/index";
+import { SVGImage, ImageSourceSVG } from "nativescript-svg";
 
 interface Props {
     focused: boolean,
@@ -36,8 +38,40 @@ export class ChatTab extends React.Component<Props, State>
             avatar: "~/img/002.svg",
             name: "Venusaur",
             message: "Solar beam!",
+            timestamp: new Date(new Date().setDate(new Date().getDate() - 1)),
+            online: false,
+        },
+        {
+            type: "ELECTRIC",
+            avatar: "~/img/025.svg",
+            name: "Pikachu",
+            message: "Pika pika!",
             timestamp: new Date(),
             online: true,
+        },
+        {
+            type: "NORMAL",
+            avatar: "~/img/133.svg",
+            name: "Eevee",
+            message: "Smell ya later!",
+            timestamp: new Date(new Date().setDate(new Date().getDate() - 2)),
+            online: false,
+        },
+        {
+            type: "FAIRY",
+            avatar: "~/img/035.svg",
+            name: "Clefairy",
+            message: "...",
+            timestamp: new Date(new Date().setMonth(new Date().getMonth() - 1)),
+            online: false,
+        },
+        {
+            type: "NORMAL",
+            avatar: "~/img/143.svg",
+            name: "Snorlax",
+            message: "gtg 😴",
+            timestamp: new Date(new Date().setDate(new Date().getDate() - 1)),
+            online: false,
         },
     ]);
 
@@ -70,12 +104,12 @@ export class ChatTab extends React.Component<Props, State>
         uiNavBar.prefersLargeTitles = true;
     };
 
-    private readonly avatarLength: number = Length.toDevicePixels(20);
+    private readonly avatarLength: number = Length.toDevicePixels(60);
 
     private readonly styles = {
         avatar: {
-            width: { value: this.avatarLength, unit: "dip" as "dip" },
-            height: { value: this.avatarLength, unit: "dip" as "dip" },
+            width: { value: this.avatarLength, unit: "px" as "px" },
+            height: { value: this.avatarLength, unit: "px" as "px" },
         },
     };
 
@@ -109,13 +143,19 @@ export class ChatTab extends React.Component<Props, State>
                                     rows={[new ItemSpec(1, "star")]}
                                     columns={[new ItemSpec(this.avatarLength, "pixel"), new ItemSpec(1, "star"), new ItemSpec(1, "auto")]}
                                 >
-                                    <$Image
+                                    <$SVGImage
                                         row={0}
                                         col={0}
                                         src={item.avatar}
+                                        loadMode={"sync"}
+                                        // onLoaded={(args: EventData) => {
+                                        //     const svgImage: SVGImage = args.object as SVGImage;
+                                        //     const imageSource: ImageSourceSVG = svgImage.imageSource;
+                                        // }}
                                         style={this.styles.avatar}
-                                        backgroundColor={new Color("green")}
-                                        stretch={"aspectFill"}
+                                        onIsLoadingChange={(isLoading: boolean)=>{
+                                            console.log(`SVGImage 'isLoading' now: ${isLoading}`);
+                                        }}
                                     />
                                     <$GridLayout
                                         row={0}
