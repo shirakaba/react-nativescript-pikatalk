@@ -1,8 +1,10 @@
 import * as React from "react";
 import * as ReactNativeScript from "react-nativescript";
-import { Frame, Page } from "react-nativescript/dist/client/ElementRegistry";
+import { Frame, Page, ActionBar } from "react-nativescript/dist/client/ElementRegistry";
 import { $TabView, $TabViewItem, $StackLayout, $Label, $ActionBar, $Frame, $Page } from "react-nativescript";
 import { Color } from "tns-core-modules/color";
+import { isIOS } from "tns-core-modules/platform/platform";
+import { EventData } from "tns-core-modules/ui/page/page";
 
 export class ChatTab extends React.Component<{}, {}>
 {
@@ -24,7 +26,16 @@ export class ChatTab extends React.Component<{}, {}>
 				return page;
 			}
 		});
-	}
+    }
+    
+    private readonly setActionBarNativeStyle = (ab: ActionBar) => {
+        if(!isIOS){
+            return;
+        }
+
+        const uiNavBar: UINavigationBar = ab.ios as UINavigationBar;
+        uiNavBar.prefersLargeTitles = true;
+    };
 
 	render(){
 		const {} = this.props;
@@ -34,9 +45,14 @@ export class ChatTab extends React.Component<{}, {}>
             <$TabViewItem title={"Chat"}>
                 <$Frame ref={this.frameRef}>
                     <$Page ref={this.pageRef}>
-                        <$ActionBar title={"ACTION SUB TITLE"}/>
-                        <$StackLayout height={{ value: 100, unit: "%"}} width={{ value: 100, unit: "%"}} backgroundColor={new Color("yellow")}>
-                            <$Label>TODO: PikaTalk 2</$Label>
+                        <$ActionBar
+                            title={"Conversations"}
+                            onLoaded={(args: EventData) => {
+                                this.setActionBarNativeStyle(args.object as ActionBar);
+                            }}
+                        />
+                        <$StackLayout height={{ value: 100, unit: "%"}} width={{ value: 100, unit: "%"}} backgroundColor={new Color("white")}>
+                            <$Label>TODO: Put something in here</$Label>
                         </$StackLayout>
                     </$Page>
                 </$Frame>
