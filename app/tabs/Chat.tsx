@@ -142,6 +142,7 @@ export class ChatTab extends React.Component<Props, State>
                                 <$GridLayout ref={ref}
                                     rows={[new ItemSpec(1, "star")]}
                                     columns={[new ItemSpec(this.avatarLength, "pixel"), new ItemSpec(1, "star"), new ItemSpec(1, "auto")]}
+                                    padding={8}
                                 >
                                     <$SVGImage
                                         row={0}
