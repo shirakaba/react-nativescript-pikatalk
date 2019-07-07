@@ -11,7 +11,7 @@ import { ObservableArray } from "tns-core-modules/data/observable-array/observab
 import { FontWeight } from "tns-core-modules/ui/enums/enums";
 import { Length } from "tns-core-modules/ui/styling/style-properties";
 import { $SVGImage } from "../nativescript-svg/index";
-import { SVGImage, ImageSourceSVG } from "nativescript-svg";
+import { SVGImage, ImageSourceSVG } from "@teammaestro/nativescript-svg";
 
 interface Props {
     focused: boolean,

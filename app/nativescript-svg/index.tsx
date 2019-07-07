@@ -1,7 +1,7 @@
 import * as console from "react-nativescript/dist/shared/Logger";
 import * as React from "react";
 import { PropsWithoutForwardedRef } from "react-nativescript/dist/shared/NativeScriptComponentTypings";
-import { SVGImage as NativeScriptSVGImage, ImageSourceSVG } from "nativescript-svg";
+import { SVGImage as NativeScriptSVGImage, ImageSourceSVG } from "@teammaestro/nativescript-svg";
 import { ViewComponentProps, RCTView } from "react-nativescript/dist/components/View";
 import { EventData } from "tns-core-modules/data/observable/observable";
 import { register } from "react-nativescript/dist/client/ElementRegistry";
